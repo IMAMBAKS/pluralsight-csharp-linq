@@ -1,0 +1,13 @@
+/home/imambaks/RiderProjects/Cars/Cars/bin/Debug/netcoreapp2.2/Cars.deps.json
+/home/imambaks/RiderProjects/Cars/Cars/bin/Debug/netcoreapp2.2/Cars.runtimeconfig.json
+/home/imambaks/RiderProjects/Cars/Cars/bin/Debug/netcoreapp2.2/Cars.runtimeconfig.dev.json
+/home/imambaks/RiderProjects/Cars/Cars/bin/Debug/netcoreapp2.2/Cars.dll
+/home/imambaks/RiderProjects/Cars/Cars/bin/Debug/netcoreapp2.2/Cars.pdb
+/home/imambaks/RiderProjects/Cars/Cars/obj/Debug/netcoreapp2.2/Cars.csprojAssemblyReference.cache
+/home/imambaks/RiderProjects/Cars/Cars/obj/Debug/netcoreapp2.2/Cars.csproj.CoreCompileInputs.cache
+/home/imambaks/RiderProjects/Cars/Cars/obj/Debug/netcoreapp2.2/Cars.AssemblyInfoInputs.cache
+/home/imambaks/RiderProjects/Cars/Cars/obj/Debug/netcoreapp2.2/Cars.AssemblyInfo.cs
+/home/imambaks/RiderProjects/Cars/Cars/obj/Debug/netcoreapp2.2/Cars.dll
+/home/imambaks/RiderProjects/Cars/Cars/obj/Debug/netcoreapp2.2/Cars.pdb
+/home/imambaks/RiderProjects/Cars/Cars/bin/Debug/netcoreapp2.2/fuel.csv
+/home/imambaks/RiderProjects/Cars/Cars/bin/Debug/netcoreapp2.2/manufacturers.csv
