@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Xml.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,54 +14,41 @@ namespace Cars
     {
         static void Main(string[] args)
         {
-            var cars = ProcessCars("fuel.csv");
-            var manufacturers = ProcessManufacturers("manufacturers.csv");
-
-            var query =
-                from manufacturer in manufacturers
-                join car in cars on manufacturer.Name equals car.Manufacturer
-                    
-                    into carGroup
-                orderby manufacturer.Name
-                select new
-                {
-                    Manufacturer = manufacturer,
-                    Cars = carGroup
-                };
-
-
-            var query2 =
-                cars.GroupBy(c => c.Manufacturer)
-                    .Select(g =>
-                    {
-                        var results = g.Aggregate(new CarStatistics(),
-                            (acc, c) => acc.Accumulate(c),
-                            acc => acc.Compute());
-
-                        return new
-                        {
-                            Name = g.Key,
-                            Avg = results.Average,
-                            Max = results.Max,
-                            Min = results.Min
-                        };
-                    })
-                    .OrderBy(r => r.Max);
-                
-
-
-            foreach (var result in query2)
-            {
-                Console.WriteLine($"{ result.Name }");
-                Console.WriteLine($"\tMax: { result.Max }");
-                Console.WriteLine($"\tMin: { result.Min }");
-                Console.WriteLine($"\tAverage: { result.Avg }");
-                
-                
-            }
+            CreateXml();
+            QueryXml();
         }
-        
-        
+
+        private static void QueryXml()
+        {
+            var document = XDocument.Load("fuel.xml");
+
+            var query = document.Element("Cars").Elements("Car").Where(e => e.Attribute("Manufacturer")?.Value == "BMW")
+                .Select(e => e.Attribute("Name").Value);
+
+            foreach (var name in query)
+            {
+                Console.WriteLine(name); 
+            }
+
+
+        }
+
+        private static void CreateXml()
+        {
+            var records = ProcessCars("fuel.csv");
+
+            var document = new XDocument();
+            var cars = new XElement("Cars",
+                from record in records
+                select new XElement("Car",
+                    new XAttribute("Name", record.Name),
+                    new XAttribute("Combined", record.Combined),
+                    new XAttribute("Manufacturer", record.Manufacturer)
+                )
+            );
+            document.Add(cars);
+            document.Save("fuel.xml");
+        }
 
         private static List<Manufacturer> ProcessManufacturers(string path)
         {
@@ -103,8 +91,8 @@ namespace Cars
         {
             Max = Int32.MinValue;
             Min = Int32.MaxValue;
-            
         }
+
         public CarStatistics Accumulate(Car car)
         {
             Count += 1;
@@ -116,7 +104,6 @@ namespace Cars
 
         public CarStatistics Compute()
         {
-
             Average = Total / Count;
             return this;
         }
