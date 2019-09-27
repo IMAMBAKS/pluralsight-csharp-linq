@@ -28,20 +28,23 @@ namespace Cars
                 };
 
             var query2 =
-                cars.Join(manufacturers, c => c.Manufacturer, m => m.Name, (c, m) =>
-                    new
-                    {
-                        m.Headquarters,
-                        c.Name,
-                        c.Combined
-                    })
-                    .OrderByDescending(c => c.Combined)
-                    .ThenBy(c => c.Name);
+                cars.GroupBy(c => c.Manufacturer.ToUpper())
+                    .OrderBy(g => g.Key);
+            
 
 
-            foreach (var car in query2.Take(10))
+
+            foreach (var group in query2)
             {
-                Console.WriteLine($"{car.Headquarters} {car.Name}: {car.Combined}");
+                Console.WriteLine(group.Key);
+
+                foreach (var car in group.OrderByDescending(c=>c.Combined))
+                {
+
+                    Console.WriteLine($"\t{car.Name} : {car.Combined}");
+                    
+                }
+                
             }
         }
 
